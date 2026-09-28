@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faiz Ullah | Video Editor, AI Content Creator & Website Developer</title>
+<meta name="description" content="Faiz Ullah is a video editor, AI content creator, content producer, and website developer creating engaging digital content, AI-powered visuals, and modern web experiences.">
+<meta property="og:title" content="Faiz Ullah | Video Editor, AI Content Creator & Website Developer">
+<meta property="og:description" content="I create engaging digital content, AI-powered videos, modern websites, and creative visual experiences.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/avatar-hero.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%233b82f6'/><stop offset='1' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='24' fill='url(%23g)'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' text-anchor='middle' fill='white'>F</text></svg>">
+<style>
+:root{
+  --bg:#08080e; --bg2:#0b0b13; --card:rgba(255,255,255,.035);
+  --blue:#3b82f6; --violet:#8b5cf6; --cyan:#22d3ee;
+  --text:#f2f3f8; --muted:#9aa1b8; --line:rgba(255,255,255,.09);
+  --grad:linear-gradient(120deg,var(--blue),var(--violet));
+  --radius:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.65}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.2}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+section{scroll-margin-top:84px;position:relative;padding:110px 0}
+.wrap{width:min(1180px,92%);margin:0 auto}
+/* ---------- background fx ---------- */
+.bg-fx{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(1200px 800px at 80% -10%,rgba(59,130,246,.10),transparent 60%),radial-gradient(1000px 700px at 10% 20%,rgba(139,92,246,.09),transparent 60%),var(--bg)}
+.blob{position:absolute;border-radius:50%;filter:blur(110px);opacity:.5;animation:drift 22s ease-in-out infinite alternate}
+.blob.b1{width:480px;height:480px;background:rgba(59,130,246,.35);top:-140px;right:-120px}
+.blob.b2{width:420px;height:420px;background:rgba(139,92,246,.30);top:38%;left:-160px;animation-delay:-8s}
+.blob.b3{width:380px;height:380px;background:rgba(34,211,238,.16);bottom:-120px;right:20%;animation-delay:-14s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,50px) scale(1.12)}}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
+/* ---------- preloader ---------- */
+#loader{position:fixed;inset:0;background:var(--bg);z-index:2000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;transition:opacity .6s,visibility .6s}
+#loader.done{opacity:0;visibility:hidden}
+.load-ring{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,.1);border-top-color:var(--blue);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loader p{font-family:'Sora';letter-spacing:4px;font-size:13px;color:var(--muted)}
+/* ---------- cursor glow ---------- */
+#cursor{position:fixed;width:340px;height:340px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(59,130,246,.12),transparent 65%);transform:translate(-50%,-50%);transition:opacity .3s}
+@media(hover:none){#cursor{display:none}}
+/* ---------- nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:background .35s,box-shadow .35s,backdrop-filter .35s}
+.nav-inner{width:min(1180px,92%);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:20px 0;transition:padding .35s}
+header.scrolled{background:rgba(8,8,14,.78);backdrop-filter:blur(18px);box-shadow:0 10px 40px rgba(0,0,0,.45)}
+header.scrolled .nav-inner{padding:13px 0}
+.logo{font-family:'Sora';font-weight:800;font-size:22px;letter-spacing:.5px}
+.logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--muted);position:relative;padding:4px 0;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--grad);border-radius:2px;transition:width .3s}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:6px;padding:8px;z-index:1002}
+.burger span{width:26px;height:2px;background:#fff;border-radius:2px;transition:.35s}
+.burger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+@media(max-width:900px){
+  .burger{display:flex}
+  .nav-links{position:fixed;inset:0;background:rgba(8,8,14,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:30px;transform:translateY(-100%);transition:transform .45s cubic-bezier(.7,0,.3,1)}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{font-size:22px}
+}
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:100px;font-family:'Sora';font-weight:600;font-size:15px;cursor:pointer;border:0;transition:transform .3s,box-shadow .3s,background .3s;position:relative;overflow:hidden}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 30px rgba(99,102,241,.35)}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 44px rgba(99,102,241,.55)}
+.btn-ghost{background:rgba(255,255,255,.05);color:#fff;border:1px solid var(--line);backdrop-filter:blur(8px)}
+.btn-ghost:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.6);box-shadow:0 10px 30px rgba(139,92,246,.25)}
+/* ---------- section headings ---------- */
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+.kicker::before{content:"";width:34px;height:2px;background:var(--grad);border-radius:2px}
+.sec-title{font-size:clamp(30px,4.4vw,50px);font-weight:800;margin-bottom:14px}
+.sec-title .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sec-sub{color:var(--muted);max-width:640px;font-size:16.5px}
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1),filter .8s ease;transition-delay:var(--d,0s)}
+.reveal.visible{opacity:1;transform:none;filter:blur(0)}
+/* ---------- hero ---------- */
+#home{min-height:100vh;display:flex;align-items:center;padding:150px 0 90px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+.avail{display:inline-flex;align-items:center;gap:10px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:#4ade80;font-size:13px;font-weight:600;padding:9px 18px;border-radius:100px;margin-bottom:26px}
+.avail .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;box-shadow:0 0 12px #4ade80;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7);opacity:.6}}
+.hero-title{font-size:clamp(40px,6vw,72px);font-weight:800;margin-bottom:8px}
+.hero-title .name{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.type-line{font-size:clamp(20px,2.8vw,30px);font-weight:600;color:var(--cyan);min-height:1.6em;margin:10px 0 20px;font-family:'Sora'}
+.type-line .caret{display:inline-block;width:3px;height:1em;background:var(--cyan);margin-left:4px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-desc{color:var(--muted);font-size:17px;max-width:520px;margin-bottom:36px}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+/* hero visual */
+.hero-visual{position:relative;display:flex;justify-content:center}
+.avatar-frame{position:relative;width:min(380px,80vw);aspect-ratio:4/5;border-radius:32px;overflow:hidden;border:1px solid rgba(139,92,246,.35);box-shadow:0 30px 90px rgba(59,130,246,.22),0 0 0 8px rgba(255,255,255,.02);animation:floaty 7s ease-in-out infinite}
+.avatar-frame img{width:100%;height:100%;object-fit:cover}
+.avatar-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,8,14,.55))}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.ring-glow{position:absolute;inset:-40px;border-radius:44px;background:conic-gradient(from 0deg,rgba(59,130,246,.25),rgba(139,92,246,.25),rgba(34,211,238,.2),rgba(59,130,246,.25));filter:blur(50px);z-index:-1;animation:spinSlow 14s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.float-card{position:absolute;background:rgba(14,14,24,.72);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:12px 18px;font-family:'Sora';font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 14px 40px rgba(0,0,0,.5);animation:floaty 6s ease-in-out infinite;white-space:nowrap}
+.float-card i{width:34px;height:34px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.float-card i svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+.fc1{top:6%;left:-4%;animation-delay:-1s}
+.fc2{top:32%;right:-6%;animation-delay:-2.5s}
+.fc3{bottom:28%;left:-9%;animation-delay:-4s}
+.fc4{bottom:6%;right:0;animation-delay:-5.5s}
+@media(max-width:1000px){
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero-desc{margin:0 auto 36px}
+  .hero-cta{justify-content:center}
+  .avail{margin:0 auto 26px}
+  .hero-visual{margin-top:20px}
+  .fc1{left:0}.fc2{right:0}.fc3{left:0}
+}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:12px;letter-spacing:2px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll-hint::after{content:"";width:1px;height:44px;background:linear-gradient(var(--cyan),transparent);animation:hintDrop 1.8s infinite}
+@keyframes hintDrop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+</style>
+</head>
+<body>
+<div class="bg-fx"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid-overlay"></div></div>
+<div id="cursor"></div>
+<div id="loader"><div class="load-ring"></div><p>FAIZ ULLAH</p></div>
+
+<header id="header">
+  <div class="nav-inner">
+    <a href="#home" class="logo">Faiz<span>Ullah</span></a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="avail reveal"><span class="dot"></span>Available for Creative Projects</div>
+      <h1 class="hero-title reveal" style="--d:.1s">Hi, I'm <span class="name">Faiz Ullah</span><br>I Create. Edit. Build.</h1>
+      <div class="type-line reveal" style="--d:.2s"><span id="typed"></span><span class="caret"></span></div>
+      <p class="hero-desc reveal" style="--d:.3s">I create engaging digital content, AI-powered videos, modern websites, and creative visual experiences. I'm always learning, adapting, and keeping up with new technology.</p>
+      <div class="hero-cta reveal" style="--d:.4s">
+        <a href="#portfolio" class="btn btn-primary">View My Work
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#contact" class="btn btn-ghost">Let's Work Together</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal" style="--d:.3s">
+      <div style="position:relative">
+        <div class="ring-glow"></div>
+        <div class="avatar-frame"><img src="assets/avatar-hero.webp" alt="Faiz Ullah — professional portrait" fetchpriority="high"></div>
+        <div class="float-card fc1"><i><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z"/></svg></i>AI Content</div>
+        <div class="float-card fc2"><i><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></i>Video Editing</div>
+        <div class="float-card fc3"><i><svg viewBox="0 0 24 24"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg></i>Web Development</div>
+        <div class="float-card fc4"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></i>Creative Production</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <img src="assets/avatar-about.webp" alt="Faiz Ullah working at his video editing studio" loading="lazy">
+        <div class="about-badge"><strong>AI Creator</strong><span>Video • Web • Content</span></div>
+      </div>
+      <div>
+        <span class="kicker reveal">About Me</span>
+        <h2 class="sec-title reveal" style="--d:.1s">A Little <span class="hl">About Me</span></h2>
+        <p class="reveal" style="--d:.2s;color:var(--muted);margin:18px 0">I'm Faiz Ullah, a creative professional focused on video editing, AI content creation, content production, and website development.</p>
+        <p class="reveal" style="--d:.25s;color:var(--muted);margin-bottom:18px">I enjoy learning new tools, experimenting with technology, and turning ideas into useful and engaging digital content.</p>
+        <p class="reveal" style="--d:.3s;color:var(--muted);margin-bottom:34px">One of my strongest qualities is that I'm a good learner. I quickly understand new concepts, adapt to changes, and continuously update my skills according to new technologies and industry trends.</p>
+        <div class="about-cards">
+          <div class="about-card reveal" style="--d:.35s">
+            <div class="about-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div>
+            <h4>Quick Learner</h4><p>Fast at understanding new tools and workflows.</p>
+          </div>
+          <div class="about-card reveal" style="--d:.45s">
+            <div class="about-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 3v6h-6"/></svg></div>
+            <h4>Adaptable</h4><p>Comfortable adapting to new technologies, trends, and creative requirements.</p>
+          </div>
+          <div class="about-card reveal" style="--d:.55s">
+            <div class="about-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg></div>
+            <h4>Always Learning</h4><p>Continuously improving skills and staying updated with modern technology.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.about-visual{position:relative}
+.about-visual img{border-radius:28px;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.about-visual::before{content:"";position:absolute;inset:-24px;background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(139,92,246,.18));filter:blur(46px);z-index:-1;border-radius:40px}
+.about-badge{position:absolute;bottom:26px;left:26px;background:rgba(12,12,22,.8);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:14px 22px;animation:floaty 6s ease-in-out infinite}
+.about-badge strong{font-family:'Sora';display:block;font-size:15px}
+.about-badge span{font-size:12.5px;color:var(--muted)}
+.about-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.about-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px;transition:transform .35s,box-shadow .35s,border-color .35s}
+.about-card:hover{transform:translateY(-8px);border-color:rgba(139,92,246,.5);box-shadow:0 20px 50px rgba(99,102,241,.22)}
+.about-card-ic{width:46px;height:46px;border-radius:14px;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.about-card-ic svg{width:22px;height:22px;stroke:#fff}
+.about-card h4{font-size:15.5px;margin-bottom:8px}
+.about-card p{font-size:13px;color:var(--muted)}
+@media(max-width:1000px){.about-grid{grid-template-columns:1fr;gap:50px}}
+@media(max-width:640px){.about-cards{grid-template-columns:1fr}}
+</style>
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <span class="kicker reveal">Services</span>
+    <h2 class="sec-title reveal" style="--d:.1s">What <span class="hl">I Do</span></h2>
+    <p class="sec-sub reveal" style="--d:.2s;margin-bottom:54px">From concept to final delivery — creative services built for the modern digital world.</p>
+    <div class="svc-grid">
+      <div class="svc-card reveal" style="--d:.1s">
+        <div class="svc-img"><img src="assets/visual-editing.webp" alt="Video editing workspace" loading="lazy"></div>
+        <div class="svc-body">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></div>
+          <h3>Video Editing</h3>
+          <p>Create engaging, clean, and dynamic videos for social media, YouTube, advertisements, and digital content.</p>
+          <span class="svc-arrow">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <div class="svc-card reveal" style="--d:.2s">
+        <div class="svc-img"><img src="assets/visual-ai.webp" alt="AI content creation concept" loading="lazy"></div>
+        <div class="svc-body">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z"/></svg></div>
+          <h3>AI Content Creation</h3>
+          <p>Create AI-powered videos, visuals, concepts, characters, and creative content using modern AI tools and workflows.</p>
+          <span class="svc-arrow">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <div class="svc-card reveal" style="--d:.3s">
+        <div class="svc-img"><img src="assets/visual-team.webp" alt="Creative content production team" loading="lazy"></div>
+        <div class="svc-body">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Content Production</h3>
+          <p>Transform ideas into complete digital content with creative planning, production, editing, and optimization.</p>
+          <span class="svc-arrow">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <div class="svc-card reveal" style="--d:.4s">
+        <div class="svc-img"><img src="assets/mockup-website.webp" alt="Modern website design mockup" loading="lazy"></div>
+        <div class="svc-body">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg></div>
+          <h3>Website Development</h3>
+          <p>Build modern, responsive, visually appealing websites with clean layouts, smooth interactions, and responsive design.</p>
+          <span class="svc-arrow">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.svc-card{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;transition:transform .4s cubic-bezier(.2,.7,.3,1),box-shadow .4s,border-color .4s;position:relative}
+.svc-card:hover{transform:translateY(-12px);border-color:rgba(139,92,246,.55);box-shadow:0 26px 60px rgba(99,102,241,.28)}
+.svc-img{height:170px;overflow:hidden;position:relative}
+.svc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.svc-card:hover .svc-img img{transform:scale(1.08)}
+.svc-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(8,8,14,.7))}
+.svc-body{padding:26px 24px 28px;position:relative}
+.svc-ic{width:52px;height:52px;border-radius:16px;background:var(--grad);display:flex;align-items:center;justify-content:center;margin-top:-52px;margin-bottom:18px;position:relative;z-index:2;box-shadow:0 10px 26px rgba(99,102,241,.4)}
+.svc-ic svg{width:24px;height:24px;stroke:#fff}
+.svc-body h3{font-size:18px;margin-bottom:10px}
+.svc-body p{font-size:14px;color:var(--muted);margin-bottom:18px}
+.svc-arrow{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--cyan);opacity:0;transform:translateX(-8px);transition:.35s}
+.svc-card:hover .svc-arrow{opacity:1;transform:none}
+@media(max-width:1000px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.svc-grid{grid-template-columns:1fr}.svc-arrow{opacity:1;transform:none}}
+</style>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="wrap">
+    <span class="kicker reveal">Expertise</span>
+    <h2 class="sec-title reveal" style="--d:.1s">Skills & <span class="hl">Expertise</span></h2>
+    <p class="sec-sub reveal" style="--d:.2s;margin-bottom:54px">A toolkit that keeps growing — I learn new tools fast and adapt to whatever the project needs.</p>
+    <div class="rings">
+      <div class="ring-card reveal" style="--d:.1s" data-progress="92">
+        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="bar" cx="60" cy="60" r="52"/></svg>
+        <div class="ring-label"><strong>92%</strong><span>Video Editing</span></div>
+      </div>
+      <div class="ring-card reveal" style="--d:.2s" data-progress="90">
+        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="bar" cx="60" cy="60" r="52"/></svg>
+        <div class="ring-label"><strong>90%</strong><span>AI Content Creation</span></div>
+      </div>
+      <div class="ring-card reveal" style="--d:.3s" data-progress="88">
+        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="bar" cx="60" cy="60" r="52"/></svg>
+        <div class="ring-label"><strong>88%</strong><span>Content Production</span></div>
+      </div>
+      <div class="ring-card reveal" style="--d:.4s" data-progress="85">
+        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="bar" cx="60" cy="60" r="52"/></svg>
+        <div class="ring-label"><strong>85%</strong><span>Website Development</span></div>
+      </div>
+    </div>
+    <div class="tags reveal" style="--d:.2s">
+      <span>Graphic Design</span><span>AI Video Generation</span><span>Prompt Engineering</span><span>Creative Storytelling</span><span>Social Media Content</span><span>Responsive Web Design</span>
+    </div>
+    <div class="learn-strip reveal" style="--d:.3s">
+      <span class="learn-dot"></span>
+      <p><strong>Always learning:</strong> I continuously explore new AI tools, editing techniques, and web technologies — my workflow evolves with the industry.</p>
+    </div>
+  </div>
+</section>
+<style>
+.rings{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:44px}
+.ring-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:34px 20px;text-align:center;transition:transform .35s,border-color .35s,box-shadow .35s}
+.ring-card:hover{transform:translateY(-8px);border-color:rgba(59,130,246,.5);box-shadow:0 20px 50px rgba(59,130,246,.2)}
+.ring-card svg{width:120px;height:120px;transform:rotate(-90deg)}
+.ring-card .track{fill:none;stroke:rgba(255,255,255,.08);stroke-width:10}
+.ring-card .bar{fill:none;stroke:url(#ringGrad);stroke-width:10;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.3,1)}
+.ring-label{margin-top:16px}
+.ring-label strong{font-family:'Sora';font-size:26px;display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ring-label span{font-size:14px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:40px}
+.tags span{padding:11px 22px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:13.5px;font-weight:500;color:var(--muted);transition:.3s;cursor:default}
+.tags span:hover{color:#fff;border-color:rgba(34,211,238,.6);box-shadow:0 0 24px rgba(34,211,238,.25);transform:translateY(-3px)}
+.learn-strip{display:flex;gap:18px;align-items:center;background:linear-gradient(120deg,rgba(59,130,246,.1),rgba(139,92,246,.1));border:1px solid rgba(139,92,246,.3);border-radius:20px;padding:24px 30px;max-width:860px;margin:0 auto}
+.learn-dot{width:14px;height:14px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan);flex-shrink:0;animation:pulse 1.8s infinite}
+.learn-strip p{font-size:14.5px;color:var(--muted)}
+.learn-strip strong{color:#fff}
+@media(max-width:1000px){.rings{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.rings{grid-template-columns:repeat(2,1fr);gap:14px}.ring-card{padding:24px 10px}}
+</style>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+<!-- ============ PORTFOLIO ============ -->
+<section id="portfolio">
+  <div class="wrap">
+    <span class="kicker reveal">Portfolio</span>
+    <h2 class="sec-title reveal" style="--d:.1s">Selected <span class="hl">Work</span></h2>
+    <p class="sec-sub reveal" style="--d:.2s;margin-bottom:40px">A mix of AI films, edits, and web projects — crafted with modern creative workflows.</p>
+    <div class="filters reveal" style="--d:.25s">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="video">Video Editing</button>
+      <button class="filter-btn" data-filter="ai">AI Content</button>
+      <button class="filter-btn" data-filter="web">Websites</button>
+      <button class="filter-btn" data-filter="creative">Creative Projects</button>
+    </div>
+    <div class="pf-grid" id="pfGrid">
+      <div class="pf-card reveal" style="--d:.1s" data-cat="ai" data-type="video" data-src="https://drive.google.com/file/d/1UCsZbLsQ7jBxkNIRFjwdMpyRVNXzP5a9/preview" data-title="The Dragon's Son — AI Fantasy Film">
+        <div class="pf-img"><img src="assets/thumb-dragon3.jpg" alt="The Dragon's Son — AI fantasy film" loading="lazy"><span class="pf-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="pf-info"><span class="pf-cat">AI Content</span><h3>The Dragon's Son</h3><p>AI-generated fantasy short film — concept, characters, and cinematic edit.</p><button class="pf-btn">View Project</button></div>
+      </div>
+      <div class="pf-card reveal" style="--d:.2s" data-cat="ai" data-type="video" data-src="https://drive.google.com/file/d/1kEwJqfi3CyG0Qa152w21j_HbfNNWxwwe/preview" data-title="The Last Dragon Egg — AI Fantasy Film">
+        <div class="pf-img"><img src="assets/thumb-dragon4.jpg" alt="The Last Dragon Egg — AI fantasy film" loading="lazy"><span class="pf-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="pf-info"><span class="pf-cat">AI Content</span><h3>The Last Dragon Egg</h3><p>Epic AI fantasy episode with dramatic storytelling and sound design.</p><button class="pf-btn">View Project</button></div>
+      </div>
+      <div class="pf-card reveal" style="--d:.3s" data-cat="video" data-type="video" data-src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1050215027844451" data-title="The Last Warmth — Short Film Edit">
+        <div class="pf-img"><img src="assets/thumb-warmth.jpg" alt="The Last Warmth — short film edit" loading="lazy"><span class="pf-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="pf-info"><span class="pf-cat">Video Editing</span><h3>The Last Warmth</h3><p>Vertical re-edit of a fantasy short film with cinematic framing.</p><button class="pf-btn">View Project</button></div>
+      </div>
+      <div class="pf-card reveal" style="--d:.1s" data-cat="web" data-type="image" data-src="assets/mockup-website.webp" data-title="Modern Business Website">
+        <div class="pf-img"><img src="assets/mockup-website.webp" alt="Modern business website design" loading="lazy"></div>
+        <div class="pf-info"><span class="pf-cat">Websites</span><h3>Modern Business Website</h3><p>Dark premium website concept with smooth interactions and bold typography.</p><button class="pf-btn">View Project</button></div>
+      </div>
+      <div class="pf-card reveal" style="--d:.2s" data-cat="web" data-type="image" data-src="assets/mockup-ecommerce.webp" data-title="E-Commerce Store Design">
+        <div class="pf-img"><img src="assets/mockup-ecommerce.webp" alt="E-commerce store website design" loading="lazy"></div>
+        <div class="pf-info"><span class="pf-cat">Websites</span><h3>E-Commerce Store Design</h3><p>Luxury online store concept — responsive across laptop and mobile.</p><button class="pf-btn">View Project</button></div>
+      </div>
+      <div class="pf-card reveal" style="--d:.3s" data-cat="creative" data-type="image" data-src="assets/visual-social.webp" data-title="Social Content Production">
+        <div class="pf-img"><img src="assets/visual-social.webp" alt="Social media content production setup" loading="lazy"></div>
+        <div class="pf-info"><span class="pf-cat">Creative Projects</span><h3>Social Content Production</h3><p>End-to-end content planning, shooting direction, and editing for social platforms.</p><button class="pf-btn">View Project</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.filter-btn{padding:11px 24px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font-family:'Sora';font-size:13.5px;font-weight:600;cursor:pointer;transition:.3s}
+.filter-btn:hover{color:#fff;border-color:rgba(139,92,246,.5)}
+.filter-btn.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(99,102,241,.35)}
+.pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pf-card{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;transition:transform .4s,opacity .4s,box-shadow .4s,border-color .4s}
+.pf-card.hide{display:none}
+.pf-card:hover{transform:translateY(-10px);border-color:rgba(59,130,246,.5);box-shadow:0 26px 60px rgba(59,130,246,.22)}
+.pf-img{height:210px;overflow:hidden;position:relative}
+.pf-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.pf-card:hover .pf-img img{transform:scale(1.1)}
+.pf-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:rgba(8,8,14,.55);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;transition:.3s}
+.pf-play svg{width:24px;height:24px;margin-left:3px}
+.pf-card:hover .pf-play{background:var(--grad);box-shadow:0 0 30px rgba(99,102,241,.6)}
+.pf-info{padding:24px}
+.pf-cat{font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan)}
+.pf-info h3{font-size:19px;margin:10px 0 8px}
+.pf-info p{font-size:13.5px;color:var(--muted);margin-bottom:18px}
+.pf-btn{background:none;border:1px solid var(--line);color:#fff;padding:11px 24px;border-radius:100px;font-family:'Sora';font-size:13px;font-weight:600;cursor:pointer;transition:.3s}
+.pf-btn:hover{background:var(--grad);border-color:transparent;box-shadow:0 8px 24px rgba(99,102,241,.4)}
+@media(max-width:1000px){.pf-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.pf-grid{grid-template-columns:1fr}}
+/* modal */
+.modal{position:fixed;inset:0;z-index:1500;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(4,4,8,.85);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.35s}
+.modal.open{opacity:1;visibility:visible}
+.modal-box{width:min(880px,100%);background:#0e0e18;border:1px solid var(--line);border-radius:24px;overflow:hidden;transform:scale(.92);transition:.35s;max-height:90vh;display:flex;flex-direction:column}
+.modal.open .modal-box{transform:scale(1)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--line)}
+.modal-head h3{font-size:17px}
+.modal-close{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;transition:.3s}
+.modal-close:hover{background:var(--grad)}
+.modal-body{position:relative;aspect-ratio:16/9;background:#000}
+.modal-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.modal-body img{width:100%;height:100%;object-fit:contain}
+</style>
+
+<!-- ============ EDUCATION ============ -->
+<section id="education">
+  <div class="wrap">
+    <span class="kicker reveal">Journey</span>
+    <h2 class="sec-title reveal" style="--d:.1s">Educa<span class="hl">tion</span></h2>
+    <div class="timeline">
+      <div class="tl-item reveal" style="--d:.15s">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <span class="tl-date">2024 — 2028</span>
+          <h3>Bachelor's Degree</h3>
+          <p class="tl-school">University of the Punjab</p>
+          <p class="tl-desc">Currently studying — building strong foundations in commerce, technology, and digital creativity side by side.</p>
+          <span class="tl-status">Currently Studying</span>
+        </div>
+      </div>
+      <div class="tl-item reveal" style="--d:.3s">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <span class="tl-date">2022 — 2024</span>
+          <h3>Intermediate</h3>
+          <p class="tl-school">Higher Secondary Education</p>
+          <p class="tl-desc">Completed intermediate studies — where my interest in technology and creative media really took off.</p>
+          <span class="tl-status done">Completed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.timeline{position:relative;max-width:720px;margin:60px auto 0;padding-left:44px}
+.timeline::before{content:"";position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--blue),var(--violet),var(--cyan));border-radius:2px;box-shadow:0 0 18px rgba(99,102,241,.6)}
+.tl-item{position:relative;margin-bottom:40px}
+.tl-item:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-44px;top:26px;width:26px;height:26px;border-radius:50%;background:var(--bg);border:3px solid var(--violet);box-shadow:0 0 20px rgba(139,92,246,.8)}
+.tl-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 32px;transition:transform .35s,border-color .35s,box-shadow .35s}
+.tl-card:hover{transform:translateX(8px);border-color:rgba(139,92,246,.5);box-shadow:0 18px 50px rgba(99,102,241,.2)}
+.tl-date{font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--cyan)}
+.tl-card h3{font-size:22px;margin:10px 0 4px}
+.tl-school{color:var(--muted);font-size:14.5px;margin-bottom:12px}
+.tl-desc{font-size:14.5px;color:var(--muted);margin-bottom:16px}
+.tl-status{display:inline-block;font-size:12px;font-weight:700;padding:7px 16px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35);color:#4ade80}
+.tl-status.done{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.4);color:#93c5fd}
+</style>
+<!-- ============ WHY WORK WITH ME ============ -->
+<section id="why">
+  <div class="wrap">
+    <span class="kicker reveal">Advantage</span>
+    <h2 class="sec-title reveal" style="--d:.1s">Why Work <span class="hl">With Me</span></h2>
+    <p class="sec-sub reveal" style="--d:.2s;margin-bottom:54px">More than skills — a mindset built for fast-moving creative work.</p>
+    <div class="why-grid">
+      <div class="why-card reveal" style="--d:.1s">
+        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <h3>Quick to Learn</h3><p>I can quickly understand new tools, software, and workflows.</p>
+      </div>
+      <div class="why-card reveal" style="--d:.2s">
+        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 3v6h-6"/></svg></div>
+        <h3>Adaptable</h3><p>I can adjust to changing requirements, technologies, and creative directions.</p>
+      </div>
+      <div class="why-card reveal" style="--d:.3s">
+        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM4 10h-2M4 14h-2M22 10h-2M22 14h-2M10 4V2M14 4V2M10 22v-2M14 22v-2"/></svg></div>
+        <h3>Technology Focused</h3><p>I continuously explore modern technology and AI tools.</p>
+      </div>
+      <div class="why-card reveal" style="--d:.4s">
+        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5M9.5 3.5L12 2l2.5 1.5"/></svg></div>
+        <h3>Creative Mindset</h3><p>I focus on turning simple ideas into engaging digital experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.why-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:36px 28px;text-align:center;transition:transform .4s,border-color .4s,box-shadow .4s;position:relative;overflow:hidden}
+.why-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:0;transition:.4s}
+.why-card:hover{transform:translateY(-10px);border-color:rgba(34,211,238,.45);box-shadow:0 24px 60px rgba(34,211,238,.14)}
+.why-card:hover::before{opacity:1}
+.why-ic{width:64px;height:64px;margin:0 auto 20px;border-radius:20px;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.15));border:1px solid rgba(139,92,246,.35);display:flex;align-items:center;justify-content:center;transition:.4s}
+.why-card:hover .why-ic{background:var(--grad);transform:scale(1.08) rotate(-6deg);box-shadow:0 12px 30px rgba(99,102,241,.45)}
+.why-ic svg{width:28px;height:28px;stroke:var(--cyan);transition:.4s}
+.why-card:hover .why-ic svg{stroke:#fff}
+.why-card h3{font-size:17.5px;margin-bottom:10px}
+.why-card p{font-size:13.5px;color:var(--muted)}
+@media(max-width:1000px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.why-grid{grid-template-columns:1fr}}
+</style>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="testimonials">
+  <div class="wrap">
+    <span class="kicker reveal">Kind Words</span>
+    <h2 class="sec-title reveal" style="--d:.1s">Testimo<span class="hl">nials</span></h2>
+    <p class="sec-sub reveal" style="--d:.2s;margin-bottom:54px">Real client feedback will be featured here soon.</p>
+    <div class="tm-grid">
+      <div class="tm-card reveal" style="--d:.1s"><div class="tm-quote">"</div><p>Client testimonials will appear here.</p><div class="tm-person"><div class="tm-av"></div><div><strong>Your Name</strong><span>Your Project</span></div></div></div>
+      <div class="tm-card reveal" style="--d:.2s"><div class="tm-quote">"</div><p>Client testimonials will appear here.</p><div class="tm-person"><div class="tm-av"></div><div><strong>Your Name</strong><span>Your Project</span></div></div></div>
+      <div class="tm-card reveal" style="--d:.3s"><div class="tm-quote">"</div><p>Client testimonials will appear here.</p><div class="tm-person"><div class="tm-av"></div><div><strong>Your Name</strong><span>Your Project</span></div></div></div>
+    </div>
+  </div>
+</section>
+<style>
+.tm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tm-card{background:var(--card);border:1px dashed rgba(255,255,255,.18);border-radius:24px;padding:34px 30px;transition:.35s}
+.tm-card:hover{transform:translateY(-8px);border-color:rgba(139,92,246,.5);border-style:solid;box-shadow:0 20px 50px rgba(99,102,241,.18)}
+.tm-quote{font-family:'Sora';font-size:52px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
+.tm-card p{color:var(--muted);font-style:italic;margin-bottom:24px}
+.tm-person{display:flex;gap:14px;align-items:center}
+.tm-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,rgba(59,130,246,.3),rgba(139,92,246,.3));border:1px solid var(--line)}
+.tm-person strong{display:block;font-size:14.5px}
+.tm-person span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){.tm-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}}
+</style>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="wrap">
+    <div class="contact-inner">
+      <span class="kicker reveal" style="justify-content:center">Get In Touch</span>
+      <h2 class="sec-title reveal" style="--d:.1s">Have a Project <span class="hl">in Mind?</span></h2>
+      <p class="reveal" style="--d:.2s;color:var(--muted);margin-bottom:54px;font-size:17px">Let's turn your idea into something people remember.</p>
+      <div class="contact-grid">
+        <form class="contact-form reveal" style="--d:.25s" id="contactForm">
+          <div class="form-row">
+            <div class="form-group"><label for="fName">Name</label><input id="fName" type="text" placeholder="Your name" required></div>
+            <div class="form-group"><label for="fEmail">Email</label><input id="fEmail" type="email" placeholder="you@example.com" required></div>
+          </div>
+          <div class="form-group"><label for="fType">Project Type</label>
+            <select id="fType"><option>Video Editing</option><option>AI Content Creation</option><option>Content Production</option><option>Website Development</option><option>Other</option></select>
+          </div>
+          <div class="form-group"><label for="fMsg">Message</label><textarea id="fMsg" rows="5" placeholder="Tell me about your project..." required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button>
+        </form>
+        <div class="contact-side reveal" style="--d:.35s">
+          <h3>Contact Information</h3>
+          <div class="ci-item"><span class="ci-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></span><div><strong>Email</strong><p>hello@faizullah.dev</p></div></div>
+          <div class="ci-item"><span class="ci-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 2 .7 2.9a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.9.3 1.9.6 2.9.7a2 2 0 011.7 2z"/></svg></span><div><strong>Phone</strong><p>+92 3XX XXXXXXX</p></div></div>
+          <div class="ci-item"><span class="ci-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><strong>Location</strong><p>Pakistan · Working Worldwide</p></div></div>
+          <div class="socials">
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.9-.5-5.6c-.3-1-1.1-1.8-2.1-2C18.6 4 12 4 12 4s-6.6 0-8.4.4c-1 .3-1.8 1-2.1 2C1 8.1 1 12 1 12s0 3.9.5 5.6c.3 1 1.1 1.8 2.1 2 1.8.4 8.4.4 8.4.4s6.6 0 8.4-.4c1-.3 1.8-1 2.1-2 .5-1.7.5-5.6.5-5.6zM9.8 15.5v-7l6 3.5z"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+            <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L1.6 2H8l4.4 5.9zm-1.1 18h1.7L7.1 3.9H5.3z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+#contact{overflow:hidden}
+.contact-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(700px 420px at 50% 42%,rgba(139,92,246,.22),transparent 65%),radial-gradient(560px 360px at 30% 70%,rgba(59,130,246,.16),transparent 65%),radial-gradient(560px 360px at 72% 68%,rgba(34,211,238,.12),transparent 65%);animation:glowShift 10s ease-in-out infinite alternate}
+@keyframes glowShift{from{transform:scale(1)}to{transform:scale(1.12)}}
+.contact-inner{text-align:center;position:relative}
+.contact-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;text-align:left;max-width:1000px;margin:0 auto}
+.contact-form{background:rgba(12,12,22,.72);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:26px;padding:40px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:9px;color:var(--muted);letter-spacing:.4px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:14px;padding:14px 18px;color:#fff;font-family:'Inter';font-size:14.5px;transition:.3s;outline:none}
+.form-group select option{background:#12121c}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+.form-group textarea{resize:vertical}
+.contact-side{background:rgba(12,12,22,.72);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:26px;padding:40px 36px}
+.contact-side h3{font-size:20px;margin-bottom:28px}
+.ci-item{display:flex;gap:16px;align-items:center;margin-bottom:24px}
+.ci-ic{width:50px;height:50px;border-radius:15px;background:linear-gradient(135deg,rgba(59,130,246,.16),rgba(139,92,246,.16));border:1px solid rgba(139,92,246,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-ic svg{width:22px;height:22px;stroke:var(--cyan)}
+.ci-item strong{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.4px}
+.ci-item p{font-size:15.5px;font-weight:500}
+.socials{display:flex;gap:12px;margin-top:30px}
+.socials a{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:.3s}
+.socials a svg{width:20px;height:20px;color:var(--muted);transition:.3s}
+.socials a:hover{background:var(--grad);border-color:transparent;transform:translateY(-4px);box-shadow:0 10px 26px rgba(99,102,241,.4)}
+.socials a:hover svg{color:#fff}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.form-row{grid-template-columns:1fr}.contact-form,.contact-side{padding:28px 22px}}
+</style>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <a href="#home" class="logo">Faiz<span>Ullah</span></a>
+      <p class="foot-tag">Video Editor • AI Content Creator • Content Producer • Website Developer</p>
+    </div>
+    <ul class="foot-links">
+      <li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#skills">Skills</a></li>
+      <li><a href="#portfolio">Portfolio</a></li><li><a href="#education">Education</a></li><li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="socials" style="margin-top:0">
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.9-.5-5.6c-.3-1-1.1-1.8-2.1-2C18.6 4 12 4 12 4s-6.6 0-8.4.4c-1 .3-1.8 1-2.1 2C1 8.1 1 12 1 12s0 3.9.5 5.6c.3 1 1.1 1.8 2.1 2 1.8.4 8.4.4 8.4.4s6.6 0 8.4-.4c1-.3 1.8-1 2.1-2 .5-1.7.5-5.6.5-5.6zM9.8 15.5v-7l6 3.5z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom"><p>© 2026 Faiz Ullah. All rights reserved.</p></div>
+</footer>
+<style>
+footer{border-top:1px solid var(--line);padding:60px 0 0;background:rgba(6,6,10,.6)}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr auto;gap:40px;align-items:start;margin-bottom:44px}
+.foot-tag{color:var(--muted);font-size:13.5px;margin-top:14px;max-width:340px}
+.foot-links{list-style:none;display:grid;grid-template-columns:repeat(3,auto);gap:14px 30px;justify-content:start}
+.foot-links a{color:var(--muted);font-size:14px;transition:.25s}
+.foot-links a:hover{color:#fff}
+.foot-bottom{border-top:1px solid var(--line);padding:24px 0;text-align:center}
+.foot-bottom p{color:var(--muted);font-size:13.5px}
+@media(max-width:800px){.foot-grid{grid-template-columns:1fr;text-align:center;justify-items:center}.foot-links{grid-template-columns:repeat(3,auto)}}
+</style>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="pfModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="modalTitle"></h3><button class="modal-close" id="modalClose" aria-label="Close">×</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<script>
+// ---------- preloader ----------
+window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('loader').classList.add('done'),400)});
+setTimeout(()=>document.getElementById('loader').classList.add('done'),4000); // safety
+
+// ---------- header scroll ----------
+const header=document.getElementById('header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// ---------- mobile menu ----------
+const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');navLinks.classList.toggle('open')});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');navLinks.classList.remove('open')}));
+
+// ---------- active nav link ----------
+const secs=[...document.querySelectorAll('section[id]')];
+const navAs=[...document.querySelectorAll('.nav-links a')];
+const navIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>navIO.observe(s));
+
+// ---------- typing roles ----------
+const roles=['Video Editor','AI Content Creator','Content Producer','Website Developer'];
+const typedEl=document.getElementById('typed');let ri=0,ci=0,del=false;
+(function type(){const w=roles[ri];
+  typedEl.textContent=w.slice(0,ci);
+  if(!del){ci++;if(ci>w.length){del=true;return setTimeout(type,1700)}}
+  else{ci--;if(ci===0){del=false;ri=(ri+1)%roles.length}}
+  setTimeout(type,del?38:75)})();
+
+// ---------- reveal on scroll ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- skill rings ----------
+const ringIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+  const card=e.target,p=+card.dataset.progress,bar=card.querySelector('.bar');
+  bar.style.strokeDashoffset=326.7-(326.7*p/100);ringIO.unobserve(card)}),{threshold:.4});
+document.querySelectorAll('.ring-card').forEach(c=>ringIO.observe(c));
+
+// ---------- portfolio filter ----------
+document.querySelectorAll('.filter-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  const f=btn.dataset.filter;
+  document.querySelectorAll('.pf-card').forEach(card=>{
+    const show=f==='all'||card.dataset.cat===f;
+    card.classList.toggle('hide',!show);
+    if(show){card.classList.remove('visible');requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.add('visible')))}
+  });
+}));
+
+// ---------- modal ----------
+const modal=document.getElementById('pfModal'),mTitle=document.getElementById('modalTitle'),mBody=document.getElementById('modalBody');
+function openModal(card){
+  mTitle.textContent=card.dataset.title;
+  mBody.innerHTML=card.dataset.type==='video'
+    ?`<iframe src="${card.dataset.src}" allow="autoplay; fullscreen" allowfullscreen loading="lazy" title="${card.dataset.title}"></iframe>`
+    :`<img src="${card.dataset.src}" alt="${card.dataset.title}">`;
+  modal.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeModal(){modal.classList.remove('open');mBody.innerHTML='';document.body.style.overflow=''}
+document.querySelectorAll('.pf-card').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('.pf-btn')||e.target.closest('.pf-img'))openModal(card)}));
+document.getElementById('modalClose').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// ---------- cursor glow (desktop) ----------
+const cursor=document.getElementById('cursor');
+if(matchMedia('(hover:hover)').matches){
+  let cx=innerWidth/2,cy=innerHeight/2,tx=cx,ty=cy;
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
+  (function follow(){cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(follow)})();
+}else cursor.style.display='none';
+
+// ---------- hero parallax ----------
+const heroSec=document.getElementById('home');
+if(matchMedia('(hover:hover)').matches){
+  heroSec.addEventListener('mousemove',e=>{
+    const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
+    document.querySelectorAll('.blob').forEach((b,i)=>{b.style.translate=`${x*(20+i*14)}px ${y*(20+i*14)}px`});
+  },{passive:true});
+}
+
+// ---------- contact form ----------
+document.getElementById('contactForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=document.getElementById('fName').value,t=document.getElementById('fType').value,m=document.getElementById('fMsg').value;
+  location.href=`mailto:hello@faizullah.dev?subject=${encodeURIComponent('Project Inquiry — '+t+' — '+n)}&body=${encodeURIComponent(m)}`;
+});
+</script>
+</body>
+</html>
